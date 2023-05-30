@@ -1,0 +1,132 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Kuyruk düğüm yapısı
+struct QueueNode {
+    int data;
+    struct QueueNode* next;
+};
+
+
+// Kuyruk yapısı
+struct Queue {
+    struct QueueNode *front, *rear;
+};
+
+
+// Yeni bir kuyruk oluşturma
+struct Queue* createQueue() {
+	
+    struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+    queue->front = queue->rear = NULL;
+    
+    return queue;
+    
+}
+
+
+// Kuyruğa eleman ekleme
+void enqueue(struct Queue* queue, int data) {
+	
+    struct QueueNode* newNode = (struct QueueNode*)malloc(sizeof(struct QueueNode));
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if (queue->rear == NULL) {
+        queue->front = queue->rear = newNode;
+    } 
+	
+	else {
+        queue->rear->next = newNode;
+        queue->rear = newNode;
+    }
+
+    printf("\n%d kuyruga eklendi.\n", data);
+}
+
+
+// Kuyruktan eleman çıkarma
+void dequeue(struct Queue* queue) {
+	
+    if (queue->front == NULL) {
+        printf("\nKuyruk bos.\n");
+        return;
+        
+    }
+
+    struct QueueNode* tempNode = queue->front;
+    
+    printf("\n%d kuyruktan cikarildi.\n", tempNode->data);
+
+    queue->front = queue->front->next;
+
+    if (queue->front == NULL) {
+        queue->rear = NULL;
+    }
+
+    free(tempNode);
+}
+
+
+// Kuyruğu görüntüleme
+void printQueue(struct Queue* queue) {
+	
+    if (queue->front == NULL) {
+        printf("\nKuyruk bos.\n");
+        return;
+    }
+
+    struct QueueNode* tempNode = queue->front;
+
+    printf("\nKuyruk: ");
+    
+    while (tempNode != NULL) {
+        printf("%d ", tempNode->data);
+        tempNode = tempNode->next;
+    }
+    
+    printf("\n");
+}
+
+
+int main() {
+	
+    struct Queue* queue = createQueue();
+    int choice, element;
+
+    while (1) {
+        printf("\n1. Kuyruga eleman ekleme\n");
+        printf("2. Kuyruktan eleman silme\n");
+        printf("3. Kuyrugu goruntuleme\n");
+        printf("4. Cikis\n");
+        printf("\nSeciminizi yapin: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+        	
+            case 1:
+                printf("\nEklenecek elemani girin: ");
+                scanf("%d", &element);
+                enqueue(queue, element);
+                break;
+                
+            case 2:
+                dequeue(queue);
+                break;
+                
+            case 3:
+                printQueue(queue);
+                break;
+                
+            case 4:
+                printf("\nProgram sonlandiriliyor...\n");
+                exit(0);
+                
+            default:
+                printf("\nGecersiz secim. Tekrar deneyin.\n");
+        }
+    }
+
+
+    return 0;
+}
