@@ -1,0 +1,121 @@
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // Konut sınıfının parametreli kurucu metodunu kullanarak nesne oluşturma
+        Konut h1 = new Konut("X Mahallesi/Y Caddesi/z. Sokak,İstanbul/Bağcılar");
+        h1.displayInfo();
+
+        // Daire sınıfının parametreli kurucu metodunu kullanarak nesne oluşturma
+        Daire d1 = new Daire("X Mahallesi/Y Caddesi/z. Sokak,İstanbul/Bağcılar", 101);
+        d1.displayInfo();
+
+        // Bina sınıfının parametreli kurucu metodunu kullanarak nesne oluşturma
+        Bina b1 = new Bina("X Mahallesi/Y Caddesi/z. Sokak,İstanbul/Bağcılar", 5);
+        b1.displayInfo();
+
+        // evSahibi sınıfının parametreli kurucu metodunu kullanarak nesne oluşturma
+        evSahibi e1 = new evSahibi("Hüseyin", "Karaali", b1);
+        e1.displayInfo();
+
+        // evSahibi sınıfının addApartment metodunu çağırarak daire ekleyin
+        e1.addApartment(d1);
+
+        // Kiraci sınıfının parametreli kurucu metodunu kullanarak nesne oluşturma
+        Kiraci k1 = new Kiraci("S****", "K*****", e1);
+        k1.displayInfo();
+    }
+}
+
+//Konut sınıfı ve özellikleri
+class Konut {
+    private String address;
+
+    public Konut(String address) {
+        this.address = address;
+    }
+
+    public void displayInfo() {
+        System.out.println("Adres: " + address);
+    }
+}
+
+//Daire  sınıfı ve özellikleri
+class Daire extends Konut {
+
+    private int apartmentNumber;
+
+    public Daire(String address, int apartmentNumber) {
+        super(address);
+        this.apartmentNumber = apartmentNumber;
+    }
+
+    public int getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public void displayInfo() {
+        System.out.println("Apartman Numarası: " + apartmentNumber);
+    }
+
+    public int compareTo(Daire other) {
+        return Integer.compare(this.apartmentNumber, other.apartmentNumber);
+    }
+
+}
+
+//Bina sınıfı ve özelllikleri
+class Bina extends Konut {
+
+    private int numberOfFloors;
+
+    public Bina(String address, int numberOfFloors) {
+        super(address);
+        this.numberOfFloors = numberOfFloors;
+    }
+
+    public void displayInfo() {
+
+        System.out.println("Kat Numarası: " + numberOfFloors);
+    }
+}
+
+//Kiracı sınıfı ve özelllikleri
+class Kiraci {
+    private String name;
+    private String surname;
+    private evSahibi landlord;
+
+    public Kiraci(String name, String surname, evSahibi landlord) {
+        this.name = name;
+        this.surname = surname;
+        this.landlord = landlord;
+    }
+
+    public void displayInfo() {
+        System.out.println("Kiracı: " + name + " " + surname);
+    }
+}
+
+//evSahibi sınıfı ve özelllikleri
+class evSahibi {
+    private String name;
+    private String surname;
+    private Bina building;
+
+    public evSahibi(String name, String surname, Bina building) {
+        this.name = name;
+        this.surname = surname;
+        this.building = building;
+    }
+
+    public void displayInfo() {
+        System.out.println("Ev Sahibi: " + name + " " + surname);
+    }
+
+    public void addApartment(Daire apartment) {
+
+        System.out.println("Daire, ev sahibine eklendi.");
+    }
+}
+
