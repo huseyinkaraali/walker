@@ -22,7 +22,7 @@ public class Main {
         e1.addApartment(d1);
 
         // Kiraci sınıfının parametreli kurucu metodunu kullanarak nesne oluşturma
-        Kiraci k1 = new Kiraci("S****", "K*****", e1);
+        Kiraci k1 = new Kiraci("Yusuf", "Aksu", e1);
         k1.displayInfo();
     }
 }
